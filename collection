@@ -1,0 +1,13 @@
+openapi: 3.0.0
+info:
+  title: Combined API
+  version: 1.0.0
+paths:
+  /orquestador:
+    $ref: './api-orquestador.yaml#/paths/~1orquestador'
+  /pedido-direccion:
+    $ref: './api-pedido-direccion.yml#/paths/~1pedido-direccion'
+  /producto-categoria:
+    $ref: './api-producto-categoria.yaml#/paths/~1producto-categoria'
+  /user-cliente-empleado:
+    $ref: './api-user-cliente-empleado.yaml#/paths/~1user-cliente-empleado'

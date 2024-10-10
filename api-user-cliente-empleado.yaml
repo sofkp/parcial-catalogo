@@ -1,20 +1,20 @@
 openapi: 3.0.0
 info:
-  title: API de Usuarios, Clientes y Empleados
-  description: API para gestionar usuarios, clientes y empleados.
+  title: API de Categorías y Productos
+  description: API para gestionar categorías y productos.
   version: 1.0.0
 
 servers:
-  - url: http://localhost:8000
+  - url: http://localhost:8000/api
     description: Servidor de desarrollo
 
 paths:
-  /usuarios:
+  /categorias:
     get:
-      summary: Obtener todos los usuarios
+      summary: Obtener todas las categorías
       responses:
         '200':
-          description: Un arreglo JSON de usuarios
+          description: Un arreglo JSON de categorías
           content:
             application/json:
               schema:
@@ -24,16 +24,10 @@ paths:
                   properties:
                     id:
                       type: integer
-                    nombre:
-                      type: string
-                    email:
-                      type: string
-                    celular:
-                      type: integer
-                    tipo:
+                    nombre_categoria:
                       type: string
     post:
-      summary: Crear un nuevo usuario
+      summary: Crear una nueva categoría
       requestBody:
         required: true
         content:
@@ -41,83 +35,27 @@ paths:
             schema:
               type: object
               properties:
-                nombre:
-                  type: string
-                email:
-                  type: string
-                celular:
-                  type: integer
-                tipo:
+                nombre_categoria:
                   type: string
       responses:
-        '200':
-          description: Usuario creado exitosamente
-
-  /usuarios/{id}:
-    parameters:
-      - in: path
-        name: id
-        required: true
-        schema:
-          type: integer
-    get:
-      summary: Obtener un usuario por ID
-      responses:
-        '200':
-          description: Un objeto de usuario
+        '201':
+          description: Categoría creada exitosamente
           content:
             application/json:
               schema:
                 type: object
                 properties:
+                  message:
+                    type: string
                   id:
                     type: integer
-                  nombre:
-                    type: string
-                  email:
-                    type: string
-                  celular:
-                    type: integer
-                  tipo:
-                    type: string
-        '404':
-          description: Usuario no encontrado
-    put:
-      summary: Actualizar un usuario por ID
-      requestBody:
-        required: true
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              type: object
-              properties:
-                nombre:
-                  type: string
-                email:
-                  type: string
-                celular:
-                  type: integer
-                tipo:
-                  type: string
-      responses:
-        '200':
-          description: Usuario actualizado exitosamente
-        '404':
-          description: Usuario no encontrado
-    delete:
-      summary: Eliminar un usuario por ID
-      responses:
-        '200':
-          description: Usuario eliminado exitosamente
-        '404':
-          description: Usuario no encontrado
 
-  /clientes:
+  /productos:
     get:
-      summary: Obtener todos los clientes
+      summary: Obtener todos los productos
       responses:
         '200':
-          description: Un arreglo JSON de clientes
+          description: Un arreglo JSON de productos
           content:
             application/json:
               schema:
@@ -125,14 +63,15 @@ paths:
                 items:
                   type: object
                   properties:
-                    id_usuario:
+                    id_producto:
                       type: integer
-                    pedidos:
-                      type: array
-                      items:
-                        type: integer
+                    precio:
+                      type: number
+                      format: double
+                    id_categoria:
+                      type: integer
     post:
-      summary: Crear un nuevo cliente
+      summary: Crear un nuevo producto
       requestBody:
         required: true
         content:
@@ -140,144 +79,20 @@ paths:
             schema:
               type: object
               properties:
-                id_usuario:
+                precio:
+                  type: number
+                  format: double
+                id_categoria:
                   type: integer
-                pedidos:
-                  type: array
-                  items:
-                    type: integer
       responses:
-        '200':
-          description: Cliente creado exitosamente
-
-  /clientes/{id}:
-    parameters:
-      - in: path
-        name: id
-        required: true
-        schema:
-          type: integer
-    get:
-      summary: Obtener un cliente por ID
-      responses:
-        '200':
-          description: Un objeto de cliente
+        '201':
+          description: Producto creado exitosamente
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  id_usuario:
-                    type: integer
-                  pedidos:
-                    type: array
-                    items:
-                      type: integer
-        '404':
-          description: Cliente no encontrado
-    put:
-      summary: Actualizar un cliente por ID
-      requestBody:
-        required: true
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              type: object
-              properties:
-                pedidos:
-                  type: array
-                  items:
-                    type: integer
-      responses:
-        '200':
-          description: Cliente actualizado exitosamente
-        '404':
-          description: Cliente no encontrado
-    delete:
-      summary: Eliminar un cliente por ID
-      responses:
-        '200':
-          description: Cliente eliminado exitosamente
-        '404':
-          description: Cliente no encontrado
-
-  /empleados:
-    get:
-      summary: Obtener todos los empleados
-      responses:
-        '200':
-          description: Un arreglo JSON de empleados
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id_usuario:
-                      type: integer
-                    cargo:
-                      type: string
-    post:
-      summary: Crear un nuevo empleado
-      requestBody:
-        required: true
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              type: object
-              properties:
-                id_usuario:
-                  type: integer
-                cargo:
-                  type: string
-      responses:
-        '200':
-          description: Empleado creado exitosamente
-
-  /empleados/{id}:
-    parameters:
-      - in: path
-        name: id
-        required: true
-        schema:
-          type: integer
-    get:
-      summary: Obtener un empleado por ID
-      responses:
-        '200':
-          description: Un objeto de empleado
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id_usuario:
-                    type: integer
-                  cargo:
+                  message:
                     type: string
-        '404':
-          description: Empleado no encontrado
-    put:
-      summary: Actualizar un empleado por ID
-      requestBody:
-        required: true
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              type: object
-              properties:
-                cargo:
-                  type: string
-      responses:
-        '200':
-          description: Empleado actualizado exitosamente
-        '404':
-          description: Empleado no encontrado
-    delete:
-      summary: Eliminar un empleado por ID
-      responses:
-        '200':
-          description: Empleado eliminado exitosamente
-        '404':
-          description: Empleado no encontrado
+                  id_producto:
+                    type: integer
